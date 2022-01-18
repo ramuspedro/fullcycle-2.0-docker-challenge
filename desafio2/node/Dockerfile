@@ -2,8 +2,10 @@ FROM node:15
 
 WORKDIR /usr/src/app
 
+RUN npm i -g nodemon
+
 COPY . .
 
 EXPOSE 3000
 
-CMD ["node","index.js"]
+CMD ["nodemon","index.js"]
