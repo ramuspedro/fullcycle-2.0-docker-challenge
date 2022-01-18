@@ -10,31 +10,37 @@ const config = {
 const mysql = require('mysql')
 const connection = mysql.createConnection(config)
 
-// var sql = "CREATE TABLE people (name VARCHAR(255))";
-// connection.query(sql)
+const dropTableSql = "DROP TABLE IF EXISTS people";
+connection.query(dropTableSql)
 
-// const sql2 = `INSERT INTO people(name) values('Pedro Ramos')`
-// connection.query(sql2)
+const createTableSql = "CREATE TABLE people (name VARCHAR(255))";
+connection.query(createTableSql)
+
+const name1 = `INSERT INTO people(name) values('Pedro Ramos')`
+connection.query(name1)
+
+const name2 = `INSERT INTO people(name) values('Geraldo Ramos')`
+connection.query(name2)
+
+const name3 = `INSERT INTO people(name) values('José Ramos')`
+connection.query(name3)
+
 
 // connection.end()
 
 
 app.get('/', (req,res) => {
-    console.log("CHEGUEI AQUI");
-    connection.connect(function(err) {
+    connection.query("SELECT * FROM people", function (err, result, fields) {
         if (err) throw err;
-        connection.query("SELECT * FROM people", function (err, result, fields) {
-            if (err) throw err;
-            console.log(result[0].name);
+        console.log(result[0].name);
 
-            let names = "<ul>"
-            for (let i = 0; i < result.length; i++) {
-                const element = result[i];
-                names += "<li>"+element.name+"</li>";
-            }
-            names += "</ul>";
-            res.send('<h1>Desafio 2: NGINX com NODEJS</h1>' + names);
-        });
+        let names = "<ul>"
+        for (let i = 0; i < result.length; i++) {
+            const element = result[i];
+            names += "<li>"+element.name+"</li>";
+        }
+        names += "</ul>";
+        res.send('<h1>Desafio 2: NGINX com NODEJS</h1>' + names);
     });
 })
 
