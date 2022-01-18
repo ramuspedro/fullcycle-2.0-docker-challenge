@@ -1,5 +1,6 @@
 FROM node:15
 
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # RUN npm i -g nodemon
@@ -11,10 +12,14 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-COPY . .
+COPY package.json /usr/src/app/
+RUN npm install
+
+# Bundle app source
+COPY . /usr/src/app
 
 EXPOSE 3000
 
 # CMD ["nodemon","index.js"]
 
-CMD ["node","index.js"]
+# CMD ["node","index.js"]
