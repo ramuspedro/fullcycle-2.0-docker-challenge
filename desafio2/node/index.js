@@ -40,7 +40,7 @@ app.get('/', (req,res) => {
             names += "<li>"+element.name+"</li>";
         }
         names += "</ul>";
-        res.send('<h1>Desafio 2: NGINX com NODEJS</h1>' + names);
+        res.send('<h1>Full Cycle Rocks!</h1>' + names);
     });
 })
 
